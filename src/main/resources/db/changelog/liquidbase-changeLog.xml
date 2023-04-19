@@ -62,6 +62,7 @@
             title VARCHAR(225) NOT NULL,
             text TEXT,
             description TEXT,
+            image TEXT,
             createdAt TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NOW(),
             updatedAt TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL,
             draft BOOLEAN,

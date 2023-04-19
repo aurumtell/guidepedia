@@ -10,5 +10,6 @@ public class ArticleRequest {
     private String title;
     private String description;
     private String text;
+    private String image;
     private Boolean draft;
 }

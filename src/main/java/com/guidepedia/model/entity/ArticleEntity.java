@@ -48,6 +48,9 @@ public class ArticleEntity {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "description")
     private String description;
 

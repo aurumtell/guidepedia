@@ -11,6 +11,7 @@ import com.guidepedia.model.request.ArticleRequest;
 import com.guidepedia.model.request.CommentRequest;
 import com.guidepedia.model.response.ArticleResponse;
 import com.guidepedia.model.response.CommentResponse;
+import com.guidepedia.model.response.ProfileResponse;
 import com.guidepedia.repo.ArticleRepository;
 import com.guidepedia.repo.CategoryRepository;
 import com.guidepedia.repo.CommentRepository;
@@ -165,5 +166,20 @@ public class ArticleService {
         UserEntity userEntity = userService.getUser(user);
         ArticleResponse articleResponse = new ArticleResponse(articleRepository.findById(articleId).orElseThrow(() -> new MyEntityNotFoundException(articleId)), userEntity);
         return articleResponse.getLikes();
+    }
+
+    @Transactional
+    public ArticleResponse updateArticle(ArticleRequest articleRequest, UserDetailsImpl user, Long articleId) {
+        ArticleEntity article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new MyEntityNotFoundException(articleId));
+        article.setCategory(categoryRepository.findByName(articleRequest.getCategoryName())
+                .orElseThrow(() -> new MyEntityNotFoundException(articleRequest.getCategoryName())));
+        article.setDraft(articleRequest.getDraft());
+        article.setDescription(articleRequest.getDescription());
+        article.setTitle(articleRequest.getTitle());
+        article.setText(articleRequest.getText());
+        article.setImage(articleRequest.getImage());
+        articleRepository.save(article);
+        return new ArticleResponse(article, userService.getUser(user));
     }
 }

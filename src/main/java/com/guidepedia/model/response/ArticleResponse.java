@@ -25,6 +25,7 @@ public class ArticleResponse {
     private String title;
     private String text;
     private String description;
+    private String image;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean draft;
@@ -40,6 +41,7 @@ public class ArticleResponse {
         this.title = article.getTitle();
         this.text = article.getText();
         this.description = article.getDescription();
+        this.image = article.getImage();
         this.createdAt = article.getCreatedAt();
         this.updatedAt = article.getUpdatedAt();
         this.draft = article.getDraft();

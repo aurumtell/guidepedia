@@ -48,6 +48,14 @@ public class ArticleController {
         return articleService.createArticle(articleRequest, user);
     }
 
+    @Operation(summary = "Update article",
+            description = "Update article")
+    @PutMapping(value = "/user/article/{articleId}")
+    @ResponseBody
+    public ArticleResponse updateArticle(@RequestBody ArticleRequest articleRequest, @AuthenticationPrincipal UserDetailsImpl user, @RequestParam Long articleId){
+        return articleService.updateArticle(articleRequest, user, articleId);
+    }
+
     @Operation(summary = "Get article",
             description = "Get article by Article Id")
     @GetMapping(value = "/user/article/{articleId}")
