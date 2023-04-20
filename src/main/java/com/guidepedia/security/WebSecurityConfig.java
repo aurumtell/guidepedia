@@ -1,11 +1,9 @@
 package com.guidepedia.security;
 
-//import com.guidepedia.security.jwt.AuthEntryPointJwt;
-import com.guidepedia.exception.ExceptionMapper;
+import com.guidepedia.security.jwt.AuthEntryPointJwt;
 import com.guidepedia.security.jwt.AuthTokenFilter;
 import com.guidepedia.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 
 @Configuration
@@ -28,9 +25,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 public class WebSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-
-//    @Autowired
-//    private AuthEntryPointJwt unauthorizedHandler;
 
     private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
@@ -48,8 +42,7 @@ public class WebSecurityConfig {
     };
 
     @Autowired
-    @Qualifier("exceptionMapper")
-    private ExceptionMapper resolver;
+    private AuthEntryPointJwt authenticationEntryPoint;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -80,16 +73,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+                .and()
                 .authorizeHttpRequests((request) -> request
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/hello").permitAll()
                 .anyRequest().authenticated()).cors()
         ;
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

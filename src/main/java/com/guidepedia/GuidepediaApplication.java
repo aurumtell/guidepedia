@@ -22,9 +22,6 @@ public class GuidepediaApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(GuidepediaApplication.class, args);
-		System.out.println(Runtime.getRuntime().totalMemory());
-		System.out.println(Runtime.getRuntime().maxMemory());
-		System.out.println(Runtime.getRuntime().freeMemory());
 	}
 
 }

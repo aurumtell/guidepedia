@@ -52,6 +52,20 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthorizationException.class)
+    protected ResponseEntity<Object> handleAuthorizationException(AuthorizationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorMessage response = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), "Authentification exception", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(com.guidepedia.exception.ExpiredJwtException.class)
+    protected ResponseEntity<Object> handleExpiredJwtException(com.guidepedia.exception.ExpiredJwtException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorMessage response = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), "Authentification exception", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorMessage> handleBusinessException(BusinessException ex) {

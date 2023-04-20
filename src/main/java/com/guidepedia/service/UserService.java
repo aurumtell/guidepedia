@@ -8,29 +8,17 @@ import com.guidepedia.model.entity.UserEntity;
 import com.guidepedia.model.request.AuthRequest;
 import com.guidepedia.model.request.SignUpRequest;
 import com.guidepedia.model.response.ArticleResponse;
-import com.guidepedia.model.response.JwtResponse;
-import com.guidepedia.model.response.MessageResponse;
 import com.guidepedia.model.response.ProfileResponse;
 import com.guidepedia.repo.ArticleRepository;
 import com.guidepedia.repo.UserRepository;
 import com.guidepedia.security.jwt.JwtUtils;
 import com.guidepedia.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -68,11 +56,9 @@ public class UserService {
         UserEntity userEntity = getUser(user);
         boolean contains = article.getSavedUsers().contains(userEntity);
         if (contains && !status) {
-//            article.removeSavedUser(userEntity);
             article.getSavedUsers().remove(userEntity);
             userEntity.getSavedArticles().remove(article);
         } else if (!contains && status) {
-//            article.addSavedUser(userEntity);
             article.getSavedUsers().add(userEntity);
             userEntity.getSavedArticles().add(article);
         }
@@ -99,12 +85,10 @@ public class UserService {
         }
         boolean contains = publisher.getSubscribers().contains(currentUser);
         if (contains && !status) {
-//            publisher.removeSubscriber(currentUser);
             publisher.getSubscribers().remove(currentUser);
             currentUser.getSubscriptions().remove(publisher);
         }
         else if (!contains && status){
-//            publisher.addSubscriber(currentUser);
             publisher.getSubscribers().add(currentUser);
             currentUser.getSubscriptions().add(publisher);
         } else {
@@ -112,7 +96,6 @@ public class UserService {
         }
         userRepository.save(publisher);
         System.out.println(currentUser.getSubscriptions().stream().map(UserEntity::getLogin).toList());
-//        userRepository.save(currentUser);
         return new ProfileResponse(publisher, publisher.getSubscribers().contains(currentUser));
     }
 

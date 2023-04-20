@@ -107,11 +107,6 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity user = (UserEntity) o;
-//        System.out.println("equals");
-//        System.out.println(user.getLogin());
-//        System.out.println(this.getLogin());
-//        System.out.println(user);
-//        System.out.println(this);
         return Objects.equals(login, user.login);
     }
 

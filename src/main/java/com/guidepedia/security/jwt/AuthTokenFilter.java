@@ -3,6 +3,7 @@ package com.guidepedia.security.jwt;
 import java.io.IOException;
 
 
+import com.guidepedia.exception.AuthorizationException;
 import com.guidepedia.security.services.UserDetailsImpl;
 import com.guidepedia.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -44,7 +45,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
+            throw new AuthorizationException("Authorization exception. JWT token null or not validated");
         }
 
         filterChain.doFilter(request, response);

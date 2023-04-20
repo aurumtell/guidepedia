@@ -50,8 +50,6 @@ public class AuthService {
     }
 
     public ResponseEntity<?> registerUser(SignUpRequest signUpRequest) {
-        System.out.println(signUpRequest.getLogin());
-        System.out.println(userRepository.existsByLogin(signUpRequest.getLogin()));
         if (userRepository.existsByLogin(signUpRequest.getLogin())) {
             return ResponseEntity
                     .badRequest()

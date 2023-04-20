@@ -61,6 +61,7 @@ public class ArticleService {
         articleEntity.setCreatedAt(LocalDateTime.now());
         articleEntity.setDraft(articleRequest.getDraft());
         articleEntity.setUsers(new HashSet<>());
+        articleEntity.setDraft(articleRequest.getDraft());
         return new ArticleResponse(articleRepository.save(articleEntity), userEntity);
     }
 
@@ -106,7 +107,8 @@ public class ArticleService {
         ArticleResponse articleResponse = new ArticleResponse();
         UserEntity userEntity = userRepository.findById(user.getId())
                 .orElseThrow(() -> new MyEntityNotFoundException(user.getId()));
-        return articleResponse.getListArticleResponces((articleRepository.findAllByCreatedByAndDraftOrderByCreatedAtDesc(userEntity, true)), userEntity);
+        return articleResponse.getListArticleResponces(
+                (articleRepository.findAllByCreatedByAndDraftOrderByCreatedAtDesc(userEntity, true)), userEntity);
     }
 
     @Transactional

@@ -56,7 +56,7 @@ public class ArticleController {
         return articleService.updateArticle(articleRequest, user, articleId);
     }
 
-    @Operation(summary = "Get article",
+    @Operation(summary = "Get article by Article Id",
             description = "Get article by Article Id")
     @GetMapping(value = "/user/article/{articleId}")
     @ResponseBody
@@ -65,7 +65,7 @@ public class ArticleController {
         return articleService.getArticleById(articleId, user);
     }
 
-    @Operation(summary = "Get article",
+    @Operation(summary = "Get article by Category Id",
             description = "Get article by Category Id")
     @GetMapping(value = "/user/article/category/{categoryId}")
     @ResponseBody
@@ -74,7 +74,7 @@ public class ArticleController {
         return articleService.getArticleByCategoryId(categoryId, user);
     }
 
-    @Operation(summary = "Get article",
+    @Operation(summary = "Get current user's articles",
             description = "Get current user's articles")
     @GetMapping(value = "/user/article")
     @ResponseBody
@@ -83,7 +83,7 @@ public class ArticleController {
         return articleService.getUserArticle(user);
     }
 
-    @Operation(summary = "Get article",
+    @Operation(summary = "Get current user's article's drafts",
             description = "Get current user's article's drafts")
     @GetMapping(value = "/user/article/draft")
     @ResponseBody
@@ -91,7 +91,7 @@ public class ArticleController {
         return articleService.getUserArticleDrafts(user);
     }
 
-    @Operation(summary = "Get article",
+    @Operation(summary = "Get all articles",
             description = "Get all articles")
     @GetMapping(value = "/article")
     @ResponseBody
@@ -100,7 +100,7 @@ public class ArticleController {
         return articleService.getAllArticle(user);
     }
 
-    @Operation(summary = "Get category",
+    @Operation(summary = "Get all categories",
             description = "Get all categories")
     @GetMapping(value = "/article/category")
     @ResponseBody
@@ -117,7 +117,7 @@ public class ArticleController {
         return articleService.createReaction(articleId, reaction, user);
     }
 
-    @Operation(summary = "Get count of reactions",
+    @Operation(summary = "Get count of reactions of article",
             description = "Get count of reactions of article")
     @GetMapping(value = "/user/article/reaction/count/{articleId}")
     @ResponseBody
@@ -142,7 +142,7 @@ public class ArticleController {
         return articleService.createComment(articleId, user, commentRequest);
     }
 
-    @Operation(summary = "Get comments",
+    @Operation(summary = "Get all comments for article",
             description = "Get all comments for article")
     @GetMapping(value = "/user/article/{articleId}/comment")
     @ResponseBody
